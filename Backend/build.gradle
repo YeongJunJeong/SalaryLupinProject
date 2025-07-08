@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // 데이터베이스 작업을 위한 JPA 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // 웹 요청(API)을 만들기 위한 필수 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // 비밀번호 암호화 등 보안을 위한 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // MySQL 데이터베이스 드라이버
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 코드를 간결하게 만들어주는 Lombok (선택사항이지만 강력 추천)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
