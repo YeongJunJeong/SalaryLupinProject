@@ -1,9 +1,6 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
+<!-- src/views/HomeView.vue -->
 <template>
   <main>
-    <TheWelcome />
+    <h1>메인화면입니다</h1>
   </main>
 </template>
