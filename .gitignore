@@ -6,3 +6,36 @@
 *.iml
 out
 gen
+*.iws
+*.ipr
+
+# Backend 관련 무시 (Backend 폴더 내 무시)
+Backend/.gradle/
+Backend/build/
+!Backend/gradle/wrapper/gradle-wrapper.jar
+!Backend/**/src/main/**/build/
+!Backend/**/src/test/**/build/
+
+Backend/.apt_generated
+Backend/.classpath
+Backend/.factorypath
+Backend/.project
+Backend/.settings
+Backend/.springBeans
+Backend/.sts4-cache
+Backend/bin/
+!Backend/**/src/main/**/bin/
+!Backend/**/src/test/**/bin/
+
+Backend/out/
+!Backend/**/src/main/**/out/
+!Backend/**/src/test/**/out/
+
+Backend/nbproject/private/
+Backend/nbbuild/
+Backend/dist/
+Backend/nbdist/
+Backend/.nb-gradle/
+
+# Backend resources (예: Spring application.properties 등)
+Backend/src/main/resources/application.properties
