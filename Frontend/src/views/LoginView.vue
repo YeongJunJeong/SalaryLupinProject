@@ -1,10 +1,10 @@
-<!-- src/views/LoginView.vue -->
 <script setup lang="ts">
 import { reactive } from 'vue';
-// 1. 방금 만든 useAuthStore를 import 합니다.
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/auth';   // 백엔드로 쏘는 함수 꺼내오기
+import LoginInput from "@/components/common/LoginInput.vue";
+import LoginButton from "@/components/common/LoginButton.vue";
 
-// 2. 스토어 인스턴스를 생성합니다.
+// Pinia 스토어를 가져옵니다.
 const authStore = useAuthStore();
 
 interface LoginForm {
@@ -34,6 +34,8 @@ const submitLogin = () => {
 
   alert(`'${fakeUser.name}'님, 환영합니다!`);
 };
+
+
 </script>
 
 <!-- <template>과 <style>은 그대로 둡니다. -->

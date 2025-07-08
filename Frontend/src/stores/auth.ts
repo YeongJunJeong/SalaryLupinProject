@@ -1,3 +1,5 @@
+// 함수는 여기 정의 됩니다
+
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
