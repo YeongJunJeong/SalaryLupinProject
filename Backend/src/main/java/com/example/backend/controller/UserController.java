@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.backend.dto.LoginRequestDto;
+import com.example.backend.dto.UserRegistrationRequestDto;
 
 //여기가 REST API 컨트롤러임을 나타냄
 @RestController
@@ -17,31 +19,23 @@ public class UserController {
 
     private final UserService userService;
 
-    // JSON 데이터를 매핑하기 위한 용도
-    public static class UserRegistrationRequest {
-        public String userId;
-        public String password;
-        public String name;
-        public String phone;
-    }
-
     /**
      * 회원가입 API
      * HTTP Method: POST
      * URL: /api/users/register
      */
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequest request) {
+    public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequestDto requestDto) {
 
         User userToRegister = User.builder()
-                .userId(request.userId)
-                .password(request.password)
-                .name(request.name)
-                .phone(request.phone)
+                .userId(requestDto.getUserId())
+                .password(requestDto.getPassword())
+                .name(requestDto.getName())
+                .phone(requestDto.getPhone())
                 .build();
 
         // UserService를 호출하여 회원가입 로직 수행
-        User registeredUser = userService.registerUser(userToRegister);
+        User registeredUser = userService.register(userToRegister);
 
         // 성공적으로 생성되었음을 의미하는 201 Created 상태 코드와 함께 사용자 정보 반환
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
@@ -58,10 +52,11 @@ public class UserController {
      * URL: /api/users/login
      */
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<User> login(@RequestBody LoginRequestDto requestDto) {
         // UserService를 호출하여 로그인 로직 수행
-        User user = userService.login(request.userId, request.password);
-
+        User user = userService.login(requestDto.getUserId(), requestDto.getPassword());
+        System.out.println(requestDto.getUserId());
+        System.out.println(requestDto.getPassword());
         // 성공적으로 조회되었음을 의미하는 200 OK 상태 코드와 함께 사용자 정보 반환
         return ResponseEntity.ok(user);
     }

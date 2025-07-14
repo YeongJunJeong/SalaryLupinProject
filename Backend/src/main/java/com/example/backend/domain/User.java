@@ -26,26 +26,29 @@ import java.sql.Timestamp;
 
 //테이블 연결
 @Table(name = "users")
-
 public class User {
     //기본키 기본 숫자 증가하게 하는거 (행넘버)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 생성을 DB에 위임 (AUTO_INCREMENT) 행숫자 자동생성 DB가 알아서 하라고 명시
+    @Column(name = "id") // id 필드는 DB의 'id' 컬럼에 매핑됩니다.
     private Long id; // PK (고유 식별자) 숫자형 고유값
 
-    @Column(nullable = false, unique = true, length = 50)
+    // userId 필드는 DB의 'user_id' 컬럼에 매핑됩니다.
+    @Column(name = "user_id", nullable = false, unique = true, length = 50)
     private String userId; // 사용자 아이디
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password; // 비밀번호 (암호화해서 저장될 것)
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name; // 이름
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(name = "phone", nullable = false, unique = true, length = 20)
     private String phone; // 전화번호
 
     @CreationTimestamp // 엔티티가 생성될 때 자동으로 시간 기록
+
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     //이걸 이용해서 User에 객체를 만든다.

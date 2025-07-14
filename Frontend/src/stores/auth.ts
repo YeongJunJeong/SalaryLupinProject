@@ -1,52 +1,48 @@
-// 함수는 여기 정의 됩니다
+// 파일 위치: src/stores/auth.ts
 
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
-import { useRouter } from "vue-router";
-import router from "@/router";
+import { defineStore } from 'pinia'
+import type { Router } from 'vue-router' // Router 타입을 import
 
-//변수 타입 정의 여기서 함
+// 스토어의 router 속성을 사용하기 위한 타입 확장 (TypeScript 트릭)
+declare module 'pinia' {
+  export interface PiniaCustomProperties {
+    router: Router;
+  }
+}
+
+// 사용자 정보 타입 정의
 interface User {
-  userid: string;
+  userId: string;
   name: string;
 }
 
-export const useAuthStore = defineStore("auth", () => {
-  //상태
-  //ref 반응형 상태 로그인 여부를 저장
-  //React useState와 유사함
-  const isLoggedIn = ref(false)
+// 옵션 스토어 방식으로 변경합니다.
+export const useAuthStore = defineStore('auth', {
+  // state: 스토어의 상태(데이터)를 정의합니다. (ref 대신 사용)
+  state: () => ({
+    isLoggedIn: false,
+    user: null as User | null
+  }),
 
-  //user가 로그인 했는지 null 인지 저장
-  const user = ref<User | null>(null)
+  // getters: 계산된 속성을 정의합니다. (computed 대신 사용)
+  getters: {
+    userName: (state) => state.user?.name
+  },
 
-  //게터
-  const userName = computed(() => user.value?.name)
+  // actions: 상태를 변경하는 메소드를 정의합니다.
+  actions: {
+    login(loginUser: User) {
+      this.user = loginUser
+      this.isLoggedIn = true
 
-  //액션
-  /**
-   * 로그인 액션
-   * @param loginUser 로그인한 사용자 정보 객체
-   */
-  function login(loginUser: User){
-    const router = useRouter();
-    user.value = loginUser
-    isLoggedIn.value = true
-    router.push('/')
-}
+      // 이제 this.router를 통해 안전하게 라우터에 접근할 수 있습니다.
+      this.router.push('/')
+    },
 
-  function logout() {
-    const router = useRouter();
-    user.value = null
-    isLoggedIn.value = false
-    router.push('/')
-}
-
-return {
-  isLoggedIn,
-  user,
-  userName,
-  login,
-  logout
-}
+    logout() {
+      this.user = null
+      this.isLoggedIn = false
+      this.router.push('/')
+    }
+  }
 })

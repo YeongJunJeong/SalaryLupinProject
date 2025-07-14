@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 //defineModel로 v-model 정의 함
-
 const model  = defineModel<string>();
 
 defineProps<{

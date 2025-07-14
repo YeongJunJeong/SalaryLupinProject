@@ -24,7 +24,7 @@ public class UserService {
      */
 
     @Transactional // 데이터베이스 상태를 변경하므로 트랜잭션 처리 필수
-    public User registerUser(User user) {
+    public User register(User user) {
         // 1. 아이디 중복 체크
         // userRepository의 findByUserId 메소드를 호출해 이미 같은 아이디가 있는지 확인
 
