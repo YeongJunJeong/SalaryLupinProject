@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "categorises")
+@Table(name = "categories")
 
 public class Categories {
     @Id

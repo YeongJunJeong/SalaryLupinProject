@@ -39,7 +39,14 @@ public class SecurityConfig {
                 // (4) HTTP 요청에 대한 접근 권한 설정
                 .authorizeHttpRequests(authz -> authz
                         // '/api/users/**' 경로 (회원가입, 로그인)는 인증 없이 누구나 접근 허용
-                        .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers(
+                                "/api/users/**", // 사용자 등록, 로그인 관련
+                                "/api/categories/**", // 카테고리 등록, 조회 관련
+                                "/api/products/**", // 게시글 등록, 조회 관련
+
+                                "swagger-ui/**",
+                                "/v3/api-docs/**"
+                                ).permitAll()
                         // 그 외의 모든 요청은 인증된 사용자만 접근 가능
                         .anyRequest().authenticated()
                 );

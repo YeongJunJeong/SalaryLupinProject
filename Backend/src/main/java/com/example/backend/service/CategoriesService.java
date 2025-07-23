@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.domain.Categories;
 import com.example.backend.domain.User;
 import com.example.backend.dto.CategoriesRequestDto;
+import com.example.backend.dto.CategoriesResponseDto;
 import com.example.backend.repository.CategoriesRepository;
 import com.example.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +48,10 @@ public class CategoriesService {
      * 최상위 카테고리 목록만 조회하는 비즈니스 로직
      * @return 최상위 카테고리들의 리스트
      */
-    @Transactional (readOnly = true) // DB에서 단순하게 읽기 할때 필요함
-    public List<Categories> findTopLevelCategories() {
-        return categoriesRepository.findByParentIdIsNull();
+    @Transactional(readOnly = true)
+    public List<CategoriesResponseDto> findTopLevelCategories() {
+        return categoriesRepository.findByParentIdIsNull().stream()
+                .map(CategoriesResponseDto::new) // .map(category -> new CategoryResponseDto(category))
+                .collect(Collectors.toList());
     }
 }

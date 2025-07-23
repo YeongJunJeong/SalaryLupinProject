@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.domain.Categories;
 import com.example.backend.dto.CategoriesRequestDto;
+import com.example.backend.dto.CategoriesResponseDto;
 import com.example.backend.service.CategoriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,9 @@ public class CategoriesController {
     public ResponseEntity<Categories> createCategories(@RequestBody CategoriesRequestDto requestDto) {
 
         //JSON 들어온거 그대로 Service가 처리하도록 던져줌
-        Categories createdCategories = categoriesService.createCategories(requestDto);
+        Categories createdCategoryDto = categoriesService.createCategories(requestDto);
 
-        return new ResponseEntity<>(createdCategories, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
 
     }
 
@@ -42,12 +43,12 @@ public class CategoriesController {
      */
     @Operation(summary = "최상위 카테고리 조회", description = "최상위 카테고리들을 조회 함")
     @GetMapping //get 요청을 이쪽으로 받는다는 말
-    public ResponseEntity<List<Categories>> getTopLevelCategories() {
+    public ResponseEntity<List<CategoriesResponseDto>> getTopLevelCategories() {
 
         //DB 값 전부 다 Service로 넘김
-        List<Categories> categories = categoriesService.findTopLevelCategories();
+        List<CategoriesResponseDto> categoryDtos  = categoriesService.findTopLevelCategories();
 
-        return new ResponseEntity(categories, HttpStatus.OK);
+        return new ResponseEntity(categoryDtos, HttpStatus.OK);
 
     }
 
